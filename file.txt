@@ -139,7 +139,21 @@ pytest:
     - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
   script:
     - pytest
-
+______________________
+# CD часть - сборка пакета (новый этап)
+build-package:
+  stage: build
+  needs: ["pytest"]  # Запустится только если pytest прошел успешно
+  before_script:
+    - python3 -m pip install --upgrade pip
+    - pip install setuptools wheel build
+  script:
+    - python -m build  # Сборка пакета
+  artifacts:
+    paths:
+      - dist/  # Сохраняем собранные пакеты как артефакты
+    expire_in: 1 week  # Артефакты хранятся 1 неделю
+_____________________
 
 
 wget https://gitlab-runner-downloads.s3.amazonaws.com/v14.10.1/binaries/gitlab-runner-linux-amd64 -O gitlab-runner
