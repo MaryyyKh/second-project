@@ -84,3 +84,9 @@ pytest:
     - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
   script:
     - pytest
+
+
+
+wget https://gitlab-runner-downloads.s3.amazonaws.com/v14.10.1/binaries/gitlab-runner-linux-amd64 -O gitlab-runner
+chmod +x gitlab-runner
+./gitlab-runner --version
