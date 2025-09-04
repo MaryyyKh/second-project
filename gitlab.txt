@@ -1,0 +1,38 @@
+# 1. ОПРЕДЕЛЕНИЕ ЭТАПОВ (STAGES)
+stages:
+  - test
+ 
+# 2. ПЕРЕМЕННЫЕ СРЕДЫ (глобальные)
+variables:
+
+# 3. КЕШИРОВАНИЕ (для ускорения сборок)
+cache:
+
+# 4. ДЖОБЫ (JOBS) - основные задачи
+test:
+  # Базовые настройки джоба
+  stage: test          # Принадлежность к этапу
+  needs: ["test0"]     # Зависимость от другого джоба
+  image: python:3.10   # Docker-образ для выполнения
+  tags: [runner-tag]   # Теги для выбора runner'а
+  
+  # Правила выполнения
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"  # Выполнять для main ветки
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"  # И для MR
+  
+  # Скрипты выполнения
+  before_script:  
+  script:
+   
+  # Дополнительные настройки
+  artifacts:
+  
+  # Условия выполнения
+  only:
+    - main              # Только для main ветки
+  except:
+    - tags              # Не выполнять для тегов
+
+# 5. ШАБЛОНЫ (для переиспользования)
+.template: &setup
