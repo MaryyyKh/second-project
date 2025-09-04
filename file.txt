@@ -72,6 +72,24 @@ _______________________
           # Артефакты будут доступны для скачивания на странице workflow run в GitHub
           # Их также можно будет использовать в последующих джобах (например, для деплоя)
 ________________________
+setup.py
+from setuptools import setup, find_packages
+
+setup(
+    name="your-project-name",  # Замените на имя вашего проекта
+    version="0.1.0",
+    author="Your Name",
+    author_email="your.email@example.com",
+    description="A short description of your project",
+    packages=find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires='>=3.6',
+)
+________________________
 name: CI
 
 on:
