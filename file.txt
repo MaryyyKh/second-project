@@ -90,3 +90,25 @@ pytest:
 wget https://gitlab-runner-downloads.s3.amazonaws.com/v14.10.1/binaries/gitlab-runner-linux-amd64 -O gitlab-runner
 chmod +x gitlab-runner
 ./gitlab-runner --version
+
+
+stages:
+  - build
+  - test
+
+build-job:
+  stage: build
+  script:
+    - echo "Устанавливаем зависимости"
+    - python3 -m venv venv
+    - source venv/bin/activate
+    - pip install --upgrade pip
+    - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+test-job:
+  stage: test
+  script:
+    - echo "Запускаем pytest"
+    - source venv/bin/activate
+    - pip install pytest
+    - pytest
